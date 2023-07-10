@@ -25,8 +25,8 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction.commit();
             System.out.println("Table is created");
         } catch (Exception e) {
-            transaction.rollback();
             e.printStackTrace();
+            if (transaction != null) transaction.rollback();
         }
     }
 
@@ -39,8 +39,8 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction.commit();
             System.out.println("Table is deleted");
         } catch (Exception e) {
-            transaction.rollback();
             e.printStackTrace();
+            if (transaction != null) transaction.rollback();
         }
     }
 
@@ -55,8 +55,8 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction.commit();
             System.out.println("User с именем – " + name + " добавлен в базу данных");
         } catch (Exception e) {
-            transaction.rollback();
             e.printStackTrace();
+            if (transaction != null) transaction.rollback();
         }
     }
 
@@ -70,8 +70,8 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction.commit();
             System.out.println("User is deleted");
         } catch (Exception e) {
-            transaction.rollback();
             e.printStackTrace();
+            if (transaction != null) transaction.rollback();
         }
     }
 
@@ -85,9 +85,9 @@ public class UserDaoHibernateImpl implements UserDao {
             userList = query.list();
             transaction.commit();
             return userList;
-        } catch (HibernateException e) {
-            transaction.rollback();
+        } catch (Exception e) {
             e.printStackTrace();
+            if (transaction != null) transaction.rollback();
         }
         return userList;
     }
@@ -101,9 +101,9 @@ public class UserDaoHibernateImpl implements UserDao {
             session.createNativeQuery("DELETE FROM users").executeUpdate();
             transaction.commit();
             System.out.println("Table is clean");
-        } catch (HibernateException e) {
-            transaction.rollback();
+        } catch (Exception e) {
             e.printStackTrace();
+            if (transaction != null) transaction.rollback();
         }
     }
 }
